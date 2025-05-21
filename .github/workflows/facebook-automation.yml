@@ -107,6 +107,7 @@
 #           git diff --cached --quiet || git commit -m "Update Facebook post status: $(date)"
 #           git push
 
+
 name: Facebook Post Automation
 on:
   schedule:
@@ -350,18 +351,18 @@ jobs:
         id: post
         run: |
           python .github/scripts/post_to_facebook.py
-          # Save post results to a file for use in the email
+          # Save post results for use in the email
           echo "Successfully posted at $(date '+%Y-%m-%d %H:%M:%S')" > post_results.txt
-          echo "post_count=1" >> $GITHUB_OUTPUT
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          GITHUB_ENV: ${{ github.env }}
       - name: Commit post status
         id: commit
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add data/pending_posts.csv
+          git add data/pending_posts.csv data/post_details.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             echo "changes_made=No changes" >> $GITHUB_OUTPUT
@@ -369,6 +370,27 @@ jobs:
             git commit -m "Update Facebook post status: $(date)"
             git push
             echo "changes_made=Yes" >> $GITHUB_OUTPUT
+          fi
+      - name: Read post details
+        id: post_details
+        if: success()
+        run: |
+          if [[ -f "data/post_details.json" ]]; then
+            POST_URL=$(jq -r '.post_url // "Not available"' data/post_details.json)
+            BLOG_URL=$(jq -r '.blog_url // "Not available"' data/post_details.json)
+            POST_TIME=$(jq -r '.post_time // "Not available"' data/post_details.json)
+            POST_ID=$(jq -r '.post_id // "Not available"' data/post_details.json)
+            
+            echo "post_url=${POST_URL}" >> $GITHUB_OUTPUT
+            echo "blog_url=${BLOG_URL}" >> $GITHUB_OUTPUT
+            echo "post_time=${POST_TIME}" >> $GITHUB_OUTPUT
+            echo "post_id=${POST_ID}" >> $GITHUB_OUTPUT
+          else
+            echo "Post details file not found"
+            echo "post_url=Not available" >> $GITHUB_OUTPUT
+            echo "blog_url=Not available" >> $GITHUB_OUTPUT
+            echo "post_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+            echo "post_id=Not available" >> $GITHUB_OUTPUT
           fi
       - name: Email notification for success
         if: success()
@@ -391,6 +413,7 @@ jobs:
                 tr:hover { background-color: #f5f5f5; }
                 .success { color: #4CAF50; font-weight: bold; }
                 .header { background-color: #f2f2f2; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+                .content-preview { background-color: #f9f9f9; border-left: 4px solid #4CAF50; padding: 10px; margin-top: 20px; margin-bottom: 20px; font-style: italic; }
               </style>
             </head>
             <body>
@@ -415,31 +438,43 @@ jobs:
                   </tr>
                 </table>
                 
-                <h3>Execution Details</h3>
+                <h3>Facebook Post Details</h3>
                 <table>
                   <tr>
                     <th>Detail</th>
                     <th>Value</th>
                   </tr>
                   <tr>
-                    <td>Run ID</td>
-                    <td>${{ github.run_id }}</td>
+                    <td>Facebook Post URL</td>
+                    <td>
+                      <a href="${{ steps.post_details.outputs.post_url }}" target="_blank">
+                        ${{ steps.post_details.outputs.post_url }}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Posts Published</td>
-                    <td>${{ steps.post.outputs.post_count }}</td>
+                    <td>Blog URL</td>
+                    <td>
+                      <a href="${{ steps.post_details.outputs.blog_url }}" target="_blank">
+                        ${{ steps.post_details.outputs.blog_url }}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Last Post Date</td>
-                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
+                    <td>Post Time</td>
+                    <td>${{ steps.post_details.outputs.post_time }}</td>
+                  </tr>
+                  <tr>
+                    <td>Facebook Post ID</td>
+                    <td>${{ steps.post_details.outputs.post_id }}</td>
                   </tr>
                   <tr>
                     <td>Changes Committed</td>
                     <td>${{ steps.commit.outputs.changes_made }}</td>
                   </tr>
                   <tr>
-                    <td>Trigger</td>
-                    <td>${{ github.event_name }}</td>
+                    <td>Run ID</td>
+                    <td>${{ github.run_id }}</td>
                   </tr>
                 </table>
                 
