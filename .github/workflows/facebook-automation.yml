@@ -2,9 +2,9 @@ name: Facebook Post Automation
 
 on:
   schedule:
-    # Run post generation every 2 hours
+    # Every 2 hours at minute 0
     - cron: '0 */2 * * *'
-    # Run Facebook posting every 30-40 minutes (using a range)
+    # Every 30 minutes
     - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
@@ -28,19 +28,11 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "task=${{ github.event.inputs.task }}" >> $GITHUB_OUTPUT
           else
-            # Determine task based on time
-            minute=$(date +%M)
-            if [[ $((minute % 30)) -eq 0 ]]; then
-              # If minute is divisible by 30 (0 or 30), run both generate and post
-              # But decide based on hour if this is a generation slot
-              hour=$(date +%H)
-              if [[ $((hour % 2)) -eq 0 ]]; then
-                echo "task=generate" >> $GITHUB_OUTPUT
-              else
-                echo "task=post" >> $GITHUB_OUTPUT
-              fi
+            MIN=$(date +%M)
+            HOUR=$(date +%H)
+            if [[ $((MIN % 60)) -eq 0 && $((HOUR % 2)) -eq 0 ]]; then
+              echo "task=generate" >> $GITHUB_OUTPUT
             else
-              # Otherwise just run post
               echo "task=post" >> $GITHUB_OUTPUT
             fi
           fi
@@ -73,7 +65,7 @@ jobs:
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add data/urls.txt data/processed_urls.txt data/pending_posts.csv
-          git diff --staged --quiet || git commit -m "Generate new Facebook posts: $(date)"
+          git diff --cached --quiet || git commit -m "Generate new Facebook posts: $(date)"
           git push
 
   post_to_facebook:
@@ -94,15 +86,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Random delay (30-40 minutes)
+      - name: Add random delay (0–10 mins)
+        if: github.event_name == 'schedule'
         run: |
-          # Random delay between 0-10 minutes (0-600 seconds)
-          # Only add delay if this is a scheduled run
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            DELAY=$((RANDOM % 600))
-            echo "Adding random delay of $DELAY seconds"
-            sleep $DELAY
-          fi
+          DELAY=$((RANDOM % 600))
+          echo "Sleeping for $DELAY seconds to randomize post timing..."
+          sleep $DELAY
 
       - name: Post to Facebook
         run: python .github/scripts/post_to_facebook.py
@@ -110,10 +99,10 @@ jobs:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
 
-      - name: Commit changes
+      - name: Commit post status
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add data/pending_posts.csv
-          git diff --staged --quiet || git commit -m "Update Facebook post status: $(date)"
+          git diff --cached --quiet || git commit -m "Update Facebook post status: $(date)"
           git push
