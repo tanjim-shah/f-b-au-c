@@ -185,7 +185,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "✅ Facebook Post Generation Successful [$(date '+%Y-%m-%d %H:%M:%S')]"
+          subject: "✅ Facebook Post Generation Successful - $(date '+%Y-%m-%d %H:%M:%S')"
           html_body: |
             <html>
             <head>
@@ -222,7 +222,7 @@ jobs:
                   </tr>
                 </table>
                 
-                <h3>Execution Details</h3>
+                <h3>Facebook Post Generation Details</h3>
                 <table>
                   <tr>
                     <th>Detail</th>
@@ -239,6 +239,10 @@ jobs:
                   <tr>
                     <td>Trigger</td>
                     <td>${{ github.event_name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Generation Time</td>
+                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
                   </tr>
                 </table>
                 
@@ -257,7 +261,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "❌ Facebook Post Generation Failed [$(date '+%Y-%m-%d %H:%M:%S')]"
+          subject: "❌ Facebook Post Generation Failed - $(date '+%Y-%m-%d %H:%M:%S')"
           html_body: |
             <html>
             <head>
@@ -294,7 +298,7 @@ jobs:
                   </tr>
                 </table>
                 
-                <h3>Execution Details</h3>
+                <h3>Facebook Post Generation Details</h3>
                 <table>
                   <tr>
                     <th>Detail</th>
@@ -307,6 +311,10 @@ jobs:
                   <tr>
                     <td>Trigger</td>
                     <td>${{ github.event_name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Failure Time</td>
+                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
                   </tr>
                 </table>
                 
@@ -370,7 +378,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "✅ Facebook Post Publishing Successful [$(date '+%Y-%m-%d %H:%M:%S')]"
+          subject: "✅ Facebook Post Publishing Successful - $(date '+%Y-%m-%d %H:%M:%S')"
           html_body: |
             <html>
             <head>
@@ -450,7 +458,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "❌ Facebook Post Publishing Failed [$(date '+%Y-%m-%d %H:%M:%S')]"
+          subject: "❌ Facebook Post Publishing Failed - $(date '+%Y-%m-%d %H:%M:%S')"
           html_body: |
             <html>
             <head>
@@ -487,7 +495,7 @@ jobs:
                   </tr>
                 </table>
                 
-                <h3>Execution Details</h3>
+                <h3>Facebook Post Publishing Details</h3>
                 <table>
                   <tr>
                     <th>Detail</th>
@@ -500,6 +508,10 @@ jobs:
                   <tr>
                     <td>Trigger</td>
                     <td>${{ github.event_name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Failure Time</td>
+                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
                   </tr>
                 </table>
                 
