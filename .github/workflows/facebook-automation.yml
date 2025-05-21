@@ -164,6 +164,9 @@ jobs:
         run: python .github/scripts/generate_facebook_posts.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Set date for email
+        id: date
+        run: echo "current_date=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
       - name: Commit changes
         id: commit
         run: |
@@ -186,7 +189,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "✅ Facebook Post Generation Successful - $(date '+%Y-%m-%d %H:%M:%S')"
+          subject: "✅ Facebook Post Generation Successful - ${{ steps.date.outputs.current_date }}"
           html_body: |
             <html>
             <head>
@@ -205,7 +208,7 @@ jobs:
               <div class="container">
                 <div class="header">
                   <h2>Facebook Post Generation Completed Successfully</h2>
-                  <p>Workflow run completed at: ${{ github.event.repository.updated_at }}</p>
+                  <p>Workflow run completed at: ${{ steps.date.outputs.current_date }}</p>
                 </div>
                 <h3>Job Summary</h3>
                 <table>
@@ -243,7 +246,7 @@ jobs:
                   </tr>
                   <tr>
                     <td>Generation Time</td>
-                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
+                    <td>${{ steps.date.outputs.current_date }}</td>
                   </tr>
                 </table>
                 
@@ -262,7 +265,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "❌ Facebook Post Generation Failed - $(date '+%Y-%m-%d %H:%M:%S')"
+          subject: "❌ Facebook Post Generation Failed - ${{ steps.date.outputs.current_date }}"
           html_body: |
             <html>
             <head>
@@ -281,7 +284,7 @@ jobs:
               <div class="container">
                 <div class="header">
                   <h2>Facebook Post Generation Failed</h2>
-                  <p>Workflow run failed at: ${{ github.event.repository.updated_at }}</p>
+                  <p>Workflow run failed at: ${{ steps.date.outputs.current_date }}</p>
                 </div>
                 <h3>Job Summary</h3>
                 <table>
@@ -315,7 +318,7 @@ jobs:
                   </tr>
                   <tr>
                     <td>Failure Time</td>
-                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
+                    <td>${{ steps.date.outputs.current_date }}</td>
                   </tr>
                 </table>
                 
@@ -347,6 +350,9 @@ jobs:
           DELAY=$((RANDOM % 600))
           echo "Sleeping for $DELAY seconds to randomize post timing..."
           sleep $DELAY
+      - name: Set date for email
+        id: date
+        run: echo "current_date=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
       - name: Post to Facebook
         id: post
         run: |
@@ -389,7 +395,7 @@ jobs:
             echo "Post details file not found"
             echo "post_url=Not available" >> $GITHUB_OUTPUT
             echo "blog_url=Not available" >> $GITHUB_OUTPUT
-            echo "post_time=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+            echo "post_time=${current_date}" >> $GITHUB_OUTPUT
             echo "post_id=Not available" >> $GITHUB_OUTPUT
           fi
       - name: Email notification for success
@@ -400,7 +406,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "✅ Facebook Post Publishing Successful - $(date '+%Y-%m-%d %H:%M:%S')"
+          subject: "✅ Facebook Post Publishing Successful - ${{ steps.date.outputs.current_date }}"
           html_body: |
             <html>
             <head>
@@ -420,7 +426,7 @@ jobs:
               <div class="container">
                 <div class="header">
                   <h2>Facebook Post Publishing Completed Successfully</h2>
-                  <p>Workflow run completed at: ${{ github.event.repository.updated_at }}</p>
+                  <p>Workflow run completed at: ${{ steps.date.outputs.current_date }}</p>
                 </div>
                 <h3>Job Summary</h3>
                 <table>
@@ -493,7 +499,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "❌ Facebook Post Publishing Failed - $(date '+%Y-%m-%d %H:%M:%S')"
+          subject: "❌ Facebook Post Publishing Failed - ${{ steps.date.outputs.current_date }}"
           html_body: |
             <html>
             <head>
@@ -512,7 +518,7 @@ jobs:
               <div class="container">
                 <div class="header">
                   <h2>Facebook Post Publishing Failed</h2>
-                  <p>Workflow run failed at: ${{ github.event.repository.updated_at }}</p>
+                  <p>Workflow run failed at: ${{ steps.date.outputs.current_date }}</p>
                 </div>
                 <h3>Job Summary</h3>
                 <table>
@@ -546,7 +552,7 @@ jobs:
                   </tr>
                   <tr>
                     <td>Failure Time</td>
-                    <td>$(date '+%Y-%m-%d %H:%M:%S')</td>
+                    <td>${{ steps.date.outputs.current_date }}</td>
                   </tr>
                 </table>
                 
