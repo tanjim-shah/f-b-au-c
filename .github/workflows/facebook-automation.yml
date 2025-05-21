@@ -171,11 +171,11 @@ jobs:
           git add data/urls.txt data/processed_urls.txt data/pending_posts.csv
           if git diff --cached --quiet; then
             echo "No changes to commit"
-            echo "changes_made=false" >> $GITHUB_OUTPUT
+            echo "changes_made=No changes" >> $GITHUB_OUTPUT
           else
             git commit -m "Generate new Facebook posts: $(date)"
             git push
-            echo "changes_made=true" >> $GITHUB_OUTPUT
+            echo "changes_made=Yes" >> $GITHUB_OUTPUT
           fi
       - name: Email notification for success
         if: success()
@@ -234,7 +234,7 @@ jobs:
                   </tr>
                   <tr>
                     <td>Changes Committed</td>
-                    <td>${{ steps.commit.outputs.changes_made == 'true' ? 'Yes' : 'No' }}</td>
+                    <td>${{ steps.commit.outputs.changes_made }}</td>
                   </tr>
                   <tr>
                     <td>Trigger</td>
@@ -355,11 +355,11 @@ jobs:
           git add data/pending_posts.csv
           if git diff --cached --quiet; then
             echo "No changes to commit"
-            echo "changes_made=false" >> $GITHUB_OUTPUT
+            echo "changes_made=No changes" >> $GITHUB_OUTPUT
           else
             git commit -m "Update Facebook post status: $(date)"
             git push
-            echo "changes_made=true" >> $GITHUB_OUTPUT
+            echo "changes_made=Yes" >> $GITHUB_OUTPUT
           fi
       - name: Email notification for success
         if: success()
@@ -422,7 +422,7 @@ jobs:
                   </tr>
                   <tr>
                     <td>Changes Committed</td>
-                    <td>${{ steps.commit.outputs.changes_made == 'true' ? 'Yes' : 'No' }}</td>
+                    <td>${{ steps.commit.outputs.changes_made }}</td>
                   </tr>
                   <tr>
                     <td>Trigger</td>
