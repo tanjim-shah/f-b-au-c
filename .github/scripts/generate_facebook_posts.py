@@ -125,7 +125,7 @@ The post should be directly ready to publish on Facebook with the link included 
 def generate_facebook_post(prompt):
     """Generate Facebook post content using Gemini API"""
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
-    model = "gemini-1.5-flash"
+    model = "gemma-3-27b-it"
     contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
     generate_content_config = types.GenerateContentConfig(
         temperature=0.7,

@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-generativeai requests Pillow
+          pip install google-genai requests Pillow
 
       - name: Generate Facebook posts
         run: python .github/scripts/generate_facebook_posts.py
