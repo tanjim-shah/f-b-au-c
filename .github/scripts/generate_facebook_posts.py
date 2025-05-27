@@ -118,6 +118,7 @@ Guidelines for the post:
 6. Don't use hashtags, asterisk or emojis
 7. Focus on the practical benefits for the reader
 8. Don't use clickbait phrases like "You won't believe..." or "This will shock you..."
+9. Use then 4-5 hashtags related post related and (#beacleaner)
 
 The post should be directly ready to publish on Facebook with the link included at the end.
 """
