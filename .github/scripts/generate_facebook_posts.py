@@ -115,10 +115,9 @@ Guidelines for the post:
 3. Include a brief description of what people will learn 
 4. End with a clear call-to-action to click the link
 5. Make the tone conversational and friendly
-6. Don't use hashtags, asterisk or emojis
+6. Don't use asterisk or emojis.
 7. Focus on the practical benefits for the reader
 8. Don't use clickbait phrases like "You won't believe..." or "This will shock you..."
-9. Use then 4-5 hashtags related post related and (#beacleaner)
 
 The post should be directly ready to publish on Facebook with the link included at the end.
 """
