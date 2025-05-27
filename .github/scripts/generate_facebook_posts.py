@@ -74,8 +74,8 @@ def append_processed_urls(urls, filename=PROCESSED_URLS_FILE):
             
             f.write(f"## Batch processed on {timestamp}\n")
             for url in urls:
-                f.write(f"[{timestamp}] {url}\n")
-            f.write("\n")  # Add a blank line between batches
+                f.write(f"{url}\n")
+            f.write("\n")
         return True
     except Exception as e:
         print(f"Error appending to processed URLs file: {e}")
@@ -112,8 +112,8 @@ def create_post_prompt(url):
 Guidelines for the post:
 1. Keep it concise (maximum 2-3 short paragraphs)
 2. Start with an attention-grabbing question or statement
-3. Include a brief description of what people will learn 
-4. End with a clear call-to-action to click the link
+3. Include a brief description of what people will learn
+4. End with a clear call-to-action to click the link with hashtags 
 5. Make the tone conversational and friendly
 6. Don't use asterisk or emojis.
 7. Focus on the practical benefits for the reader
