@@ -1,7 +1,6 @@
 {
-  "post_id": "108408051361249_1087518433479039",
-  "blog_url": "https://www.beacleaner.com/how-to-clean-retractable-screens",
-  "post_time": "2025-07-23 09:29:53",
-  "status": "success",
-  "post_url": "https://www.facebook.com/beacleaner/posts/1087518433479039"
+  "blog_url": "https://www.beacleaner.com/how-to-clean-a-kohler-cast-iron-tub",
+  "error": "{\"error\":{\"message\":\"Error validating access token: Session has expired on Wednesday, 23-Jul-25 03:00:00 PDT. The current time is Wednesday, 23-Jul-25 05:38:18 PDT.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":463,\"fbtrace_id\":\"ARb1YB5GZpe-hNrIrJvrqT1\"}}",
+  "status": "failed",
+  "post_time": "2025-07-23 12:38:18"
 }
