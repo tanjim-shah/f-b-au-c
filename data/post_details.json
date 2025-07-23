@@ -1,6 +1,7 @@
 {
-  "blog_url": "https://www.beacleaner.com/how-to-clean-pool-deck-drains",
-  "error": "{\"error\":{\"message\":\"(#200) If posting to a group, requires app being installed in the group, and \\\\\\n          either publish_to_groups permission with user token, or both pages_read_engagement \\\\\\n          and pages_manage_posts permission with page token; If posting to a page, \\\\\\n          requires both pages_read_engagement and pages_manage_posts as an admin with \\\\\\n          sufficient administrative permission\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"A0H7rIu19gi1kM0mL_zf8fC\"}}",
-  "status": "failed",
-  "post_time": "2025-07-23 08:24:33"
+  "post_id": "108408051361249_1087488270148722",
+  "blog_url": "https://www.beacleaner.com/how-much-water-does-the-washing-machine-use",
+  "post_time": "2025-07-23 08:31:57",
+  "status": "success",
+  "post_url": "https://www.facebook.com/beacleaner/posts/1087488270148722"
 }
