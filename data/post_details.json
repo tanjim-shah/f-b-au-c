@@ -1,6 +1,6 @@
 {
-  "blog_url": "https://www.beacleaner.com/how-to-clean-resin-off-molds",
-  "error": "{\"error\":{\"message\":\"Error validating access token: Session has expired on Wednesday, 23-Jul-25 03:00:00 PDT. The current time is Wednesday, 23-Jul-25 18:16:52 PDT.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":463,\"fbtrace_id\":\"A-3bOnFOq6dY-_WB7TXJNc8\"}}",
+  "blog_url": "https://www.beacleaner.com/how-to-clean-frigidaire-affinity-washer",
+  "error": "{\"error\":{\"message\":\"Error validating access token: Session has expired on Wednesday, 23-Jul-25 03:00:00 PDT. The current time is Wednesday, 23-Jul-25 20:57:50 PDT.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":463,\"fbtrace_id\":\"ACR0YAvlqK7MKUjmuVUwtYR\"}}",
   "status": "failed",
-  "post_time": "2025-07-24 01:16:52"
+  "post_time": "2025-07-24 03:57:50"
 }
